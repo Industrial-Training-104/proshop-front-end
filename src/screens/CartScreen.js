@@ -38,9 +38,9 @@ const CartScreen = ({ match, location, history }) => {
     console.log("USER - ", userData);
     if (userData && userData.isVerified) {
       history.push("/shipping");
-    } else if (!userData.isVerified) {
+    } else if (userData && !userData.isVerified) {
       history.push("/verify-account");
-    } else {
+    } else if (userData === null) {
       history.push("/");
     }
   };
