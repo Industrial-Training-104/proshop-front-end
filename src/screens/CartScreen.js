@@ -34,8 +34,12 @@ const CartScreen = ({ match, location, history }) => {
   };
 
   const checkoutHandler = () => {
-    if (localStorage.getItem("userInfo")) {
+    const userData = JSON.parse(localStorage.getItem("userInfo"));
+    console.log("USER - ", userData);
+    if (userData && userData.isVerified) {
       history.push("/shipping");
+    } else if (!userData.isVerified) {
+      history.push("/verify-account");
     } else {
       history.push("/");
     }
