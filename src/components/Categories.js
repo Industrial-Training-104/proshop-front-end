@@ -1,50 +1,38 @@
-import React from 'react'
-import { Container } from 'react-bootstrap'
-import Button from 'react-bootstrap/Button'
+import React, { useState, useEffect } from "react";
+import { Container } from "react-bootstrap";
+import Button from "react-bootstrap/Button";
+import axios from "axios";
 
 function Categories() {
+  const [categories, setCategories] = useState([]);
+
+  useEffect(() => {
+    const fetchCategories = async () => {
+      const res = await axios.get(
+        "https://proshop-dyti.onrender.com/api/products/categories"
+      );
+      setCategories(res.data);
+    };
+
+    fetchCategories();
+  }, []);
+
   return (
     <>
       <Container className="mb-4 px-0 d-flex justify-content-start flex-wrap">
-        <Button className="m-2" variant="dark" size="lg">
-          Electronics
-        </Button>{' '}
-        <Button className="m-2" variant="dark" size="lg">
-          TV
-        </Button>{' '}
-        <Button className="m-2" variant="dark" size="lg">
-          Headsets
-        </Button>{' '}
-        <Button className="m-2" variant="dark" size="lg">
-          Appliances
-        </Button>{' '}
-        <Button className="m-2" variant="dark" size="lg">
-          Children Toys
-        </Button>{' '}
-        <Button className="m-2" variant="dark" size="lg">
-          Healthcare
-        </Button>{' '}
-        <Button className="m-2" variant="dark" size="lg">
-          Accessories
-        </Button>{' '}
-        <Button className="m-2" variant="dark" size="lg">
-          Gadgets
-        </Button>{' '}
-        <Button className="m-2" variant="dark" size="lg">
-          Daily needs
-        </Button>{' '}
-        <Button className="m-2" variant="dark" size="lg">
-          Office Products
-        </Button>{' '}
-        <Button className="m-2" variant="dark" size="lg">
-          SmartPhones
-        </Button>{' '}
-        <Button className="m-2" variant="dark" size="lg">
-          Laptops
-        </Button>
+        {categories.map((category) => (
+          <Button
+            className="m-2"
+            variant="dark"
+            size="lg"
+            href={`/category/${category}`}
+          >
+            {category}
+          </Button>
+        ))}
       </Container>
     </>
-  )
+  );
 }
 
-export default Categories
+export default Categories;
